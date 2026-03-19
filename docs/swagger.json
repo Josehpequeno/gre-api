@@ -1,0 +1,134 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API que recebe dados e gera um boleto em HTML.",
+        "title": "API de Geração de Boletos",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:5005",
+    "basePath": "/",
+    "paths": {
+        "/boleto": {
+            "post": {
+                "description": "Recebe os dados do boleto e retorna o HTML gerado",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "boletos"
+                ],
+                "summary": "Gera um boleto bancário",
+                "parameters": [
+                    {
+                        "description": "Dados do boleto",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BoletoRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "HTML do boleto",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.BoletoRequest": {
+            "type": "object",
+            "required": [
+                "beneficiario_agencia",
+                "beneficiario_cnpj_cpf",
+                "beneficiario_conta",
+                "beneficiario_nome",
+                "data_vencimento",
+                "informacao_beneficiario",
+                "nosso_numero",
+                "numero_documento",
+                "pagador_cpf",
+                "pagador_endereco",
+                "pagador_nome",
+                "valor"
+            ],
+            "properties": {
+                "beneficiario_agencia": {
+                    "type": "string"
+                },
+                "beneficiario_cnpj_cpf": {
+                    "type": "string",
+                    "example": "12.345.678/0001-90"
+                },
+                "beneficiario_conta": {
+                    "type": "string"
+                },
+                "beneficiario_nome": {
+                    "type": "string",
+                    "example": "Empresa Ltda"
+                },
+                "data_vencimento": {
+                    "type": "string",
+                    "example": "31/12/2025"
+                },
+                "identificador_pagador": {
+                    "type": "string"
+                },
+                "informacao_beneficiario": {
+                    "type": "string",
+                    "example": "Multa de 2% após vencimento"
+                },
+                "nosso_numero": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "numero_documento": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "pagador_cpf": {
+                    "type": "string",
+                    "example": "123.456.789-00"
+                },
+                "pagador_endereco": {
+                    "type": "string"
+                },
+                "pagador_nome": {
+                    "type": "string",
+                    "example": "João da Silva"
+                },
+                "valor": {
+                    "type": "string",
+                    "example": "150,75"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,95 @@
+basePath: /
+definitions:
+  models.BoletoRequest:
+    properties:
+      beneficiario_agencia:
+        type: string
+      beneficiario_cnpj_cpf:
+        example: 12.345.678/0001-90
+        type: string
+      beneficiario_conta:
+        type: string
+      beneficiario_nome:
+        example: Empresa Ltda
+        type: string
+      data_vencimento:
+        example: 31/12/2025
+        type: string
+      identificador_pagador:
+        type: string
+      informacao_beneficiario:
+        example: Multa de 2% após vencimento
+        type: string
+      nosso_numero:
+        example: "123456"
+        type: string
+      numero_documento:
+        example: "123456"
+        type: string
+      pagador_cpf:
+        example: 123.456.789-00
+        type: string
+      pagador_endereco:
+        type: string
+      pagador_nome:
+        example: João da Silva
+        type: string
+      valor:
+        example: 150,75
+        type: string
+    required:
+    - beneficiario_agencia
+    - beneficiario_cnpj_cpf
+    - beneficiario_conta
+    - beneficiario_nome
+    - data_vencimento
+    - informacao_beneficiario
+    - nosso_numero
+    - numero_documento
+    - pagador_cpf
+    - pagador_endereco
+    - pagador_nome
+    - valor
+    type: object
+host: localhost:5005
+info:
+  contact: {}
+  description: API que recebe dados e gera um boleto em HTML.
+  title: API de Geração de Boletos
+  version: "1.0"
+paths:
+  /boleto:
+    post:
+      consumes:
+      - application/json
+      description: Recebe os dados do boleto e retorna o HTML gerado
+      parameters:
+      - description: Dados do boleto
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BoletoRequest'
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: HTML do boleto
+          schema:
+            type: string
+        "400":
+          description: Erro de validação
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Erro interno
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Gera um boleto bancário
+      tags:
+      - boletos
+swagger: "2.0"
