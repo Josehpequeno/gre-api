@@ -67,7 +67,6 @@ definitions:
     - parcela
     - valor
     type: object
-host: localhost:5005
 info:
   contact: {}
   description: API que recebe dados e gera um boleto em HTML.
