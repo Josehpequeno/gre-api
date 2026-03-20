@@ -128,7 +128,7 @@
     <br class="hack" />
     <!-- Inicio do recibo do sacado -->
     <div class="logo"></div>
-    <div class="cod-banco">001-9</div>
+    <div class="cod-banco">{{.BoletoRequest.CodigoBanco}}</div>
     <div class="linha-digitavel">{{.LinhaDigitavel}}</div>
     <div class="hack"></div>
 
@@ -161,9 +161,9 @@
 
     <div class="cell" style="width: 798px; height: 80px; padding-bottom: 2px">
       <label>Nome do Beneficiário/CPF/CNPJ/Endereço</label>
-      {{.BoletoRequest.NomeBeneficiario}} -
+      {{.BoletoRequest.BeneficiarioNome}} -
       {{.BoletoRequest.BeneficiarioCnpjCpf}} -
-      {{.BoletoRequest.EnderecoBeneficiario}}
+      {{.BoletoRequest.BeneficiarioEndereco}}
     </div>
 
     <br class="hack" />
@@ -259,12 +259,12 @@
       <label>(=) Valor Cobrado</label>
       &nbsp;
     </div>
-    {%if .BoletoRequest.IdentificadorPagador%}
+    {{if .BoletoRequest.IdentificadorPagador}}
     <div class="cell texto-a-direita" style="width: 150px">
       <label>Matricula/Código/Inscrição</label>
       {{.BoletoRequest.IdentificadorPagador}}
     </div>
-    {%endif%}
+    {{end}}
     <div class="cell uppercase" style="width: 798px; height: 60px; padding-bottom: 2px">
       <label>Nome do Pagador/CPF/CNPJ/Endereço</label>
       {{.BoletoRequest.PagadorNome}} - CPF:

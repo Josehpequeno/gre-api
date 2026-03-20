@@ -17,12 +17,13 @@ const docTemplate = `{
     "paths": {
         "/boleto": {
             "post": {
-                "description": "Recebe os dados do boleto e retorna o HTML gerado",
+                "description": "Retorna HTML ou PDF dependendo do parâmetro RetornarPDF",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "text/html"
+                    "text/html",
+                    "application/pdf"
                 ],
                 "tags": [
                     "boletos"
@@ -41,9 +42,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "HTML do boleto",
+                        "description": "PDF do boleto",
                         "schema": {
-                            "type": "string"
+                            "type": "file"
                         }
                     },
                     "400": {
@@ -76,13 +77,15 @@ const docTemplate = `{
                 "beneficiario_cnpj_cpf",
                 "beneficiario_conta",
                 "beneficiario_nome",
+                "codigo_banco",
+                "convenio",
                 "data_vencimento",
                 "informacao_beneficiario",
                 "nosso_numero",
                 "numero_documento",
                 "pagador_cpf",
-                "pagador_endereco",
                 "pagador_nome",
+                "parcela",
                 "valor"
             ],
             "properties": {
@@ -96,16 +99,27 @@ const docTemplate = `{
                 "beneficiario_conta": {
                     "type": "string"
                 },
+                "beneficiario_endereco": {
+                    "type": "string"
+                },
                 "beneficiario_nome": {
                     "type": "string",
                     "example": "Empresa Ltda"
+                },
+                "codigo_banco": {
+                    "type": "string",
+                    "example": "001-9"
+                },
+                "convenio": {
+                    "type": "string",
+                    "example": "12345"
                 },
                 "data_vencimento": {
                     "type": "string",
                     "example": "31/12/2025"
                 },
                 "identificador_pagador": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "informacao_beneficiario": {
                     "type": "string",
@@ -129,6 +143,14 @@ const docTemplate = `{
                 "pagador_nome": {
                     "type": "string",
                     "example": "João da Silva"
+                },
+                "parcela": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "retornar_pdf": {
+                    "type": "boolean",
+                    "example": true
                 },
                 "valor": {
                     "type": "string",

@@ -9,14 +9,22 @@ definitions:
         type: string
       beneficiario_conta:
         type: string
+      beneficiario_endereco:
+        type: string
       beneficiario_nome:
         example: Empresa Ltda
+        type: string
+      codigo_banco:
+        example: 001-9
+        type: string
+      convenio:
+        example: "12345"
         type: string
       data_vencimento:
         example: 31/12/2025
         type: string
       identificador_pagador:
-        type: string
+        type: integer
       informacao_beneficiario:
         example: Multa de 2% após vencimento
         type: string
@@ -34,6 +42,12 @@ definitions:
       pagador_nome:
         example: João da Silva
         type: string
+      parcela:
+        example: 1
+        type: integer
+      retornar_pdf:
+        example: true
+        type: boolean
       valor:
         example: 150,75
         type: string
@@ -42,13 +56,15 @@ definitions:
     - beneficiario_cnpj_cpf
     - beneficiario_conta
     - beneficiario_nome
+    - codigo_banco
+    - convenio
     - data_vencimento
     - informacao_beneficiario
     - nosso_numero
     - numero_documento
     - pagador_cpf
-    - pagador_endereco
     - pagador_nome
+    - parcela
     - valor
     type: object
 host: localhost:5005
@@ -62,7 +78,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Recebe os dados do boleto e retorna o HTML gerado
+      description: Retorna HTML ou PDF dependendo do parâmetro RetornarPDF
       parameters:
       - description: Dados do boleto
         in: body
@@ -72,11 +88,12 @@ paths:
           $ref: '#/definitions/models.BoletoRequest'
       produces:
       - text/html
+      - application/pdf
       responses:
         "200":
-          description: HTML do boleto
+          description: PDF do boleto
           schema:
-            type: string
+            type: file
         "400":
           description: Erro de validação
           schema:

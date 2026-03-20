@@ -2,7 +2,8 @@ package main
 
 import (
 	_ "gre-api/docs" // Substitua "gre-api" pelo nome do seu módulo
-	"gre-api/handlers"
+	"gre-api/internal/handlers"
+
 	"log"
 
 	"github.com/gin-gonic/gin"
