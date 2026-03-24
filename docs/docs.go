@@ -67,6 +67,50 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/retorno/read": {
+            "post": {
+                "description": "Lê o conteúdo do arquivo de retorno bancário e extrai os boletos",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "retorno"
+                ],
+                "summary": "Processa arquivo de retorno",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Conteúdo do arquivo retorno (texto com múltiplas linhas)",
+                        "name": "retorno",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.LinhaRetorno"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -155,6 +199,56 @@ const docTemplate = `{
                 "valor": {
                     "type": "string",
                     "example": "150,75"
+                }
+            }
+        },
+        "models.LinhaRetorno": {
+            "type": "object",
+            "properties": {
+                "agencia_arrecadadora": {
+                    "type": "string"
+                },
+                "codigo": {
+                    "type": "string"
+                },
+                "codigo_barras": {
+                    "type": "string"
+                },
+                "curso_id": {
+                    "type": "integer"
+                },
+                "data_credito": {
+                    "type": "string"
+                },
+                "data_pagamento": {
+                    "type": "string"
+                },
+                "forma_arrecadacao": {
+                    "type": "string"
+                },
+                "forma_pagamento": {
+                    "type": "string"
+                },
+                "matricula_inscricao_por_extenso": {
+                    "type": "string"
+                },
+                "nsr": {
+                    "type": "string"
+                },
+                "numero_autenticacao": {
+                    "type": "string"
+                },
+                "parcela": {
+                    "type": "integer"
+                },
+                "tarifa": {
+                    "type": "number"
+                },
+                "valor_boleto": {
+                    "type": "number"
+                },
+                "valor_pago": {
+                    "type": "number"
                 }
             }
         }

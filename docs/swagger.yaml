@@ -67,6 +67,39 @@ definitions:
     - parcela
     - valor
     type: object
+  models.LinhaRetorno:
+    properties:
+      agencia_arrecadadora:
+        type: string
+      codigo:
+        type: string
+      codigo_barras:
+        type: string
+      curso_id:
+        type: integer
+      data_credito:
+        type: string
+      data_pagamento:
+        type: string
+      forma_arrecadacao:
+        type: string
+      forma_pagamento:
+        type: string
+      matricula_inscricao_por_extenso:
+        type: string
+      nsr:
+        type: string
+      numero_autenticacao:
+        type: string
+      parcela:
+        type: integer
+      tarifa:
+        type: number
+      valor_boleto:
+        type: number
+      valor_pago:
+        type: number
+    type: object
 info:
   contact: {}
   description: API que recebe dados e gera um boleto em HTML.
@@ -108,4 +141,33 @@ paths:
       summary: Gera um boleto bancário
       tags:
       - boletos
+  /retorno/read:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Lê o conteúdo do arquivo de retorno bancário e extrai os boletos
+      parameters:
+      - description: Conteúdo do arquivo retorno (texto com múltiplas linhas)
+        in: formData
+        name: retorno
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.LinhaRetorno'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Processa arquivo de retorno
+      tags:
+      - retorno
 swagger: "2.0"

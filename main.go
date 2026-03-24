@@ -36,6 +36,7 @@ func main() {
 	}))
 
 	r.POST("/boleto", handlers.RenderBoleto)
+	r.POST("/retorno/read", handlers.ReadRetorno)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
