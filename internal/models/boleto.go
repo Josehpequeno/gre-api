@@ -46,19 +46,19 @@ type ReadRetornoRequest struct {
 	Retorno string `json:"retorno" binding:"required"`
 }
 type LinhaRetorno struct {
-	Codigo                       string  `json:"codigo"`
-	CursoID                      int     `json:"curso_id"`
-	ValorBoleto                  float64 `json:"valor_boleto"`
-	ValorPago                    float64 `json:"valor_pago"`
-	DataPagamento                string  `json:"data_pagamento"`
-	AgenciaArrecadadora          string  `json:"agencia_arrecadadora"`
-	CodigoBarras                 string  `json:"codigo_barras"`
-	FormaPagamento               string  `json:"forma_pagamento"`
-	Parcela                      int     `json:"parcela"`
-	DataCredito                  string  `json:"data_credito"`
-	Tarifa                       float64 `json:"tarifa"`
-	NSR                          string  `json:"nsr"`
-	FormaArrecadacao             string  `json:"forma_arrecadacao"`
-	NumeroAutenticacao           string  `json:"numero_autenticacao"`
-	MatriculaInscricaoPorExtenso string  `json:"matricula_inscricao_por_extenso"`
+	CodigoRegistro      string  `json:"codigo_registro"`
+	Codigo              string  `json:"codigo"`
+	ValorBoleto         float64 `json:"valor_boleto"`
+	ValorPago           float64 `json:"valor_pago"`
+	DataPagamento       string  `json:"data_pagamento"`
+	AgenciaArrecadadora string  `json:"agencia_arrecadadora"`
+	CodigoBarras        string  `json:"codigo_barras"`
+	FormaPagamento      string  `json:"forma_pagamento"`
+	Parcela             int     `json:"parcela"`
+	DataCredito         string  `json:"data_credito"`
+	Tarifa              float64 `json:"tarifa"`
+	NSR                 string  `json:"nsr"`
+	FormaArrecadacao    string  `json:"forma_arrecadacao"`
+	NumeroAutenticacao  string  `json:"numero_autenticacao"`
+	Identificacao       string  `json:"identificacao"`
 }

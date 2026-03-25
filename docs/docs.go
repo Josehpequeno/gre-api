@@ -214,8 +214,8 @@ const docTemplate = `{
                 "codigo_barras": {
                     "type": "string"
                 },
-                "curso_id": {
-                    "type": "integer"
+                "codigo_registro": {
+                    "type": "string"
                 },
                 "data_credito": {
                     "type": "string"
@@ -229,7 +229,7 @@ const docTemplate = `{
                 "forma_pagamento": {
                     "type": "string"
                 },
-                "matricula_inscricao_por_extenso": {
+                "identificacao": {
                     "type": "string"
                 },
                 "nsr": {

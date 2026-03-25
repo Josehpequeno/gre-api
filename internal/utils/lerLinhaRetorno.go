@@ -10,8 +10,17 @@ import (
 	"time"
 )
 
+type InformacoesCodigoBarras struct {
+	Digito     string
+	Valor      string
+	Convenio   string
+	Vencimento string
+	Codigo     string
+	Parcela    string
+}
+
 // Função para extrair informações do código de barras
-func ExtrairInformacoes(codigoBarras string) (*InformaçoesCodigoBarras, error) {
+func ExtrairInformacoes(codigoBarras string) (*InformacoesCodigoBarras, error) {
 	if len(codigoBarras) != 44 {
 		return nil, fmt.Errorf("código de barras inválido")
 	}
@@ -23,7 +32,7 @@ func ExtrairInformacoes(codigoBarras string) (*InformaçoesCodigoBarras, error) 
 	codigo := codigoBarras[35:42]
 	parcela := codigoBarras[42:44]
 
-	return &InformaçoesCodigoBarras{
+	return &InformacoesCodigoBarras{
 		Digito:     digito,
 		Valor:      vlr,
 		Convenio:   convenio,
@@ -66,8 +75,6 @@ func LerLinhaRetorno(linha string) (models.LinhaRetorno, error) {
 	numeroAutenticacao := linha[117:140]
 	formaPagamento := linha[140:141]
 
-	log.Printf("Código de registro: %s | Identificação: %s", codigoRegistro, identificacao)
-
 	// --- Parse datas ---
 	dataPagamento, _ := parseDate(dataPagamentoRaw)
 	dataCredito, _ := parseDate(dataCreditoRaw)
@@ -86,28 +93,23 @@ func LerLinhaRetorno(linha string) (models.LinhaRetorno, error) {
 	valorBoleto, _ := parseFloat(info.Valor)
 	tarifa, _ := parseFloat(tarifaRaw)
 
-	// --- Curso ---
-	var cursoID int
-
-	matriculaCodigoPorExtenso := ""
-
 	// --- Monta struct final ---
 	return models.LinhaRetorno{
-		Codigo:                       info.Codigo,
-		CursoID:                      cursoID,
-		ValorBoleto:                  valorBoleto,
-		ValorPago:                    valorPago,
-		DataPagamento:                dataPagamento,
-		AgenciaArrecadadora:          agenciaArrecadadora,
-		CodigoBarras:                 codigoDeBarras,
-		FormaPagamento:               formaPagamento,
-		Parcela:                      parcelaInt,
-		DataCredito:                  dataCredito,
-		Tarifa:                       tarifa,
-		NSR:                          nsr,
-		FormaArrecadacao:             formaArrecadacao,
-		NumeroAutenticacao:           numeroAutenticacao,
-		MatriculaInscricaoPorExtenso: matriculaCodigoPorExtenso,
+		CodigoRegistro:      codigoRegistro,
+		Codigo:              info.Codigo,
+		ValorBoleto:         valorBoleto,
+		ValorPago:           valorPago,
+		DataPagamento:       dataPagamento,
+		AgenciaArrecadadora: agenciaArrecadadora,
+		CodigoBarras:        codigoDeBarras,
+		FormaPagamento:      formaPagamento,
+		Parcela:             parcelaInt,
+		DataCredito:         dataCredito,
+		Tarifa:              tarifa,
+		NSR:                 nsr,
+		FormaArrecadacao:    formaArrecadacao,
+		NumeroAutenticacao:  numeroAutenticacao,
+		Identificacao:       identificacao,
 	}, nil
 }
 

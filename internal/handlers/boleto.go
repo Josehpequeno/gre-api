@@ -86,13 +86,11 @@ func ReadRetorno(c *gin.Context) {
 	retorno := c.PostForm("retorno")
 	resultados := make([]models.LinhaRetorno, 0)
 	it := 1
-	linhas := utils.SplitPorTamanho(retorno, 150)
-	log.Println("linhas", linhas)
+	linhas := utils.SplitPorTamanho(retorno, 151)
 	for _, linha := range linhas {
 		if linha == "" {
 			continue
 		}
-		log.Println("linha", linha)
 
 		if it == 2 {
 			if len(linha) >= 150 {
@@ -101,19 +99,15 @@ func ReadRetorno(c *gin.Context) {
 					log.Println("Erro ao ler linha de retorno:", err)
 					continue
 				}
-				log.Println(infoLinha)
 				resultados = append(resultados, infoLinha)
 			} else {
 				log.Println("Linha ignorada (não há palavra suficiente):", linha)
 			}
 		}
 		if it%3 == 0 {
-			log.Printf("fim de boleto %d", it)
-			log.Println()
 			it = 1
 		}
 		it++
 	}
-	log.Println("resultados", resultados)
 	c.JSON(http.StatusOK, resultados)
 }
